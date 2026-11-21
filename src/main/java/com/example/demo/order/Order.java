@@ -34,4 +34,11 @@ public class Order {
     public OrderStatus getStatus() { return status; }
     public BigDecimal getTotal() { return total; }
     public Instant getCreatedAt() { return createdAt; }
+
+    public void cancel() {
+        if (status == OrderStatus.SHIPPED || status == OrderStatus.CANCELLED) {
+            throw new OrderNotCancellableException(id, status);
+        }
+        this.status = OrderStatus.CANCELLED;
+    }
 }
